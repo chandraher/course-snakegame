@@ -32,33 +32,38 @@ public class SnakeAndLadderGame {
             }
 
             Dice dice = new Dice();
-            boolean gameWon = false;
+            playGame(players, dice, board);
 
-            while (!gameWon) {
-                for (Player player : players) {
-                    int roll = dice.roll();
-                    System.out.print(player.getName() + " rolled a " + roll);
-                    int currentPos = player.getPosition();
-                    player.move(roll);
-
-                    if (player.getPosition() > 100) {
-                        player.setPosition(currentPos);
-                        System.out.println(" and moved from " + currentPos + " to " + player.getPosition());
-                    } else {
-                        int newPos = board.checkPosition(player.getPosition());
-                        System.out.println(" and moved from " + currentPos + " to " + newPos);
-                        player.setPosition(newPos);
-                    }
-
-                    if (player.hasWon()) {
-                        System.out.println(player.getName() + " wins!");
-                        gameWon = true;
-                        break;
-                    }
-                }
-            }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void playGame(List<Player> players, Dice dice, Board board) {
+        boolean gameWon = false;
+
+        while (!gameWon) {
+            for (Player player : players) {
+                int roll = dice.roll();
+                System.out.print(player.getName() + " rolled a " + roll);
+                int currentPos = player.getPosition();
+                player.move(roll);
+
+                if (player.getPosition() > 100) {
+                    player.setPosition(currentPos);
+                    System.out.println(" and moved from " + currentPos + " to " + player.getPosition());
+                } else {
+                    int newPos = board.checkPosition(player.getPosition());
+                    System.out.println(" and moved from " + currentPos + " to " + newPos);
+                    player.setPosition(newPos);
+                }
+
+                if (player.hasWon()) {
+                    System.out.println(player.getName() + " wins!");
+                    gameWon = true;
+                    break;
+                }
+            }
         }
     }
 }
